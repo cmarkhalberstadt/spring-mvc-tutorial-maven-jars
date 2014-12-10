@@ -54,6 +54,9 @@ public class RestApiDaoImpl implements UserDao {
 		this.restTemplate = restTemplate;
 	}
 	
+	
+	
+	
 	/**
 	 * This method returns a list of all the users in the database through a call to the Rest API
 	 * @return - List of UserEntities for all users in the database
