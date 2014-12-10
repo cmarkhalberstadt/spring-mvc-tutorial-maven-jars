@@ -43,18 +43,20 @@ public class RestApiDaoImpl implements UserDao {
 	private final String startingURL = "http://localhost:8080/restservice";
 	
 	// the rest template object used to make rest calls
+	@Autowired
 	private RestTemplate restTemplate;
 	
-	/**
+	/*
+	*//**
 	 * Sets the restTemplate object
 	 * @param restTemplate - Rest Template object to be used
-	 */
+	 *//*
 	@Resource
 	public void setRestTemplate(RestTemplate restTemplate){
 		this.restTemplate = restTemplate;
 	}
 	
-	
+	*/
 	
 	
 	/**
