@@ -36,6 +36,19 @@
 			<version>3.2.4.RELEASE</version>
 			<scope>compile</scope>
 		</dependency>
+		
+		<dependency>
+			<artifactId>spring-orm</artifactId>
+			<groupId>org.springframework</groupId>
+			<version>3.2.4.RELEASE</version>
+			<scope>compile</scope>
+		</dependency>
+		
+		<dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
+            <version>1.9.12</version>
+        </dependency>
     
   </dependencies>
       
