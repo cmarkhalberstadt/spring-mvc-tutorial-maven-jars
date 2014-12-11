@@ -1,30 +1,12 @@
 package com.xpanxion.springmvctutorial.dao;
 
-import javax.annotation.Resource;
-
-import org.hibernate.SessionFactory;
-import org.codehaus.jackson.map.ObjectMapper;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Collections;
 
-import javax.annotation.Resource;
-
-
-
-
-
-
-
-import org.hibernate.cfg.Configuration;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.xpanxion.springmvctutorial.dto.beans.ChangeUserPasswordBean;
 import com.xpanxion.springmvctutorial.dto.beans.UserBean;
@@ -66,21 +48,25 @@ public class RestApiDaoImpl implements UserDao {
 	@Override
 	public List<UserEntity> getAllItems() {
 		ObjectMapper mapper = new ObjectMapper();
+		System.out.println("All users list obtained through REST API");
+		StringBuffer stringBuffer = new StringBuffer();
+		stringBuffer.append(this.startingURL);
+		stringBuffer.append("/api/users");
+		String url = stringBuffer.toString();
 		
-		String url = this.startingURL + "/api/users";
 		ArrayList output = this.restTemplate.getForObject(url, ArrayList.class);
 		ArrayList<UserEntity> retval = new ArrayList<UserEntity>();
 		
-		// jon's rec
-		UserEntity u = null;
-		UserBean b = null;
-		for (Object o: output){
-			b = mapper.convertValue(o, UserBean.class);
-			u = new UserEntity();
-			u.setId(b.getId());
-			u.setPassword(b.getPassword());
-			u.setUsername(b.getUsername());
-			retval.add(u);
+		// declare variables outside of FOR loop
+		UserEntity entityToAddToReturnList = null;
+		UserBean  userBeanRestCallOutput= null;
+		for (Object objectToBeConvertedToUserBean: output){
+			userBeanRestCallOutput = mapper.convertValue(objectToBeConvertedToUserBean, UserBean.class);
+			entityToAddToReturnList = new UserEntity();
+			entityToAddToReturnList.setId(userBeanRestCallOutput.getId());
+			entityToAddToReturnList.setPassword(userBeanRestCallOutput.getPassword());
+			entityToAddToReturnList.setUsername(userBeanRestCallOutput.getUsername());
+			retval.add(entityToAddToReturnList);
 		}
 		return retval;
 		
@@ -93,7 +79,13 @@ public class RestApiDaoImpl implements UserDao {
 	 */
 	@Override
 	public UserBean getUserWithUsername(String Username) {
-		String url = this.startingURL + "/api/user/" + Username;
+		
+		StringBuffer stringBuffer = new StringBuffer();
+		stringBuffer.append(this.startingURL);
+		stringBuffer.append("/api/user/");
+		stringBuffer.append(Username);
+		String url = stringBuffer.toString();
+		
 		return this.restTemplate.getForObject(url, UserBean.class);
 	}
 	
@@ -104,7 +96,13 @@ public class RestApiDaoImpl implements UserDao {
 	 */
 	@Override
 	public void changePasswordOfUser(String Username, String newPassword) {
-		String url = this.startingURL + "/api/user/" + Username;
+		
+		StringBuffer stringBuffer = new StringBuffer();
+		stringBuffer.append(this.startingURL);
+		stringBuffer.append("/api/user/");
+		stringBuffer.append(Username);
+		String url = stringBuffer.toString();
+		
 		ChangeUserPasswordBean b = new ChangeUserPasswordBean();
 		b.setNewpassword(newPassword);
 		UserBean fromDB = this.getUserWithUsername(Username);
@@ -119,7 +117,12 @@ public class RestApiDaoImpl implements UserDao {
 	 */
 	@Override
 	public void addUserToDatabase(String Username, String Password) {
-		String url = this.startingURL + "/api/user";
+		
+		StringBuffer stringBuffer = new StringBuffer();
+		stringBuffer.append(this.startingURL);
+		stringBuffer.append("/api/user");
+		String url = stringBuffer.toString();
+		
 		UserBean toAdd = new UserBean();
 		toAdd.setPassword(Password);
 		toAdd.setUsername(Username);
@@ -132,7 +135,13 @@ public class RestApiDaoImpl implements UserDao {
 	 */
 	@Override
 	public void deleteUserFromDatabase(String Username) {
-		String url = this.startingURL + "/api/user/" + Username;
+		
+		StringBuffer stringBuffer = new StringBuffer();
+		stringBuffer.append(this.startingURL);
+		stringBuffer.append("/api/user/");
+		stringBuffer.append(Username);
+		String url = stringBuffer.toString();
+		
 		this.restTemplate.delete(url);
 	}
 	

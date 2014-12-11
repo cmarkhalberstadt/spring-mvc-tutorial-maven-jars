@@ -128,9 +128,18 @@ public class UserDaoImpl implements UserDao  {
      * @return - long value - the ID for the given username in the database or -1 if the username is not in the database
      */
     private long getIDForGivenUsernameInDatabase(String username){
-    	String tableName = "usernamesandpasswords";
+    	/*String tableName = "usernamesandpasswords";
 		String SQLQuery = "SELECT id FROM " + tableName + "\n";
-		SQLQuery += "WHERE username=" + "'" + username + "'" + ";";
+		SQLQuery += "WHERE username=" + "'" + username + "'" + ";";*/
+		
+		StringBuffer stringBuffer = new StringBuffer();
+		stringBuffer.append("SELECT id FROM usernamesandpasswords");
+		stringBuffer.append("\n");
+		stringBuffer.append("WHERE username='");
+		stringBuffer.append(username);
+		stringBuffer.append("';");
+		
+		String SQLQuery = stringBuffer.toString();
 		
 		ArrayList list = this.runSQLQueryAndGetReturnList(SQLQuery);
 		
@@ -157,9 +166,18 @@ public class UserDaoImpl implements UserDao  {
      * @return - String - password for the given username or the empty string if the username is not in the database
      */
     private String getPasswordForGivenUsernameInDatabase(String username){
-        String tableName = "usernamesandpasswords";
+        /*String tableName = "usernamesandpasswords";
 		String SQLQuery = "SELECT password FROM " + tableName + "\n";
-		SQLQuery += "WHERE username=" + "'" + username + "'" + ";";
+		SQLQuery += "WHERE username=" + "'" + username + "'" + ";";*/
+		
+		StringBuffer stringBuffer = new StringBuffer();
+		stringBuffer.append("SELECT password FROM usernamesandpasswords");
+		stringBuffer.append("\n");
+		stringBuffer.append("WHERE username='");
+		stringBuffer.append(username);
+		stringBuffer.append("';");
+		
+		String SQLQuery = stringBuffer.toString();
 		
 		ArrayList list = this.runSQLQueryAndGetReturnList(SQLQuery);
 		
@@ -184,10 +202,19 @@ public class UserDaoImpl implements UserDao  {
 	 * @param Username - username of the user to be deleted
 	 */
     public void deleteGivenUserFromDataBase(String Username){
-		String tableName = "usernamesandpasswords";
+		/*String tableName = "usernamesandpasswords";
 		
 		String SQLQuery = "DELETE FROM " + tableName  + "\n";
-		SQLQuery += "WHERE username='" + Username + "';";
+		SQLQuery += "WHERE username='" + Username + "';";*/
+		
+		StringBuffer stringBuffer = new StringBuffer();
+		stringBuffer.append("DELETE FROM usernamesandpasswords");
+		stringBuffer.append("\n");
+		stringBuffer.append("WHERE username='");
+		stringBuffer.append(Username);
+		stringBuffer.append("';");
+		
+		String SQLQuery = stringBuffer.toString();
 		
 		this.runSQLQueryWithNoReturnValue(SQLQuery);
 		
@@ -226,23 +253,50 @@ public class UserDaoImpl implements UserDao  {
 	
 	@Override
 	public void changePasswordOfUser(String Username, String newPassword) {
-		String tableName = "usernamesandpasswords";
+		/*String tableName = "usernamesandpasswords";
 		
 		String SQLQuery = "";
 		
 		SQLQuery = "UPDATE " + tableName + "\n";
 		SQLQuery += "SET password=" + "'" + newPassword + "'" + "\n";
-		SQLQuery += "WHERE username=" + "'" + Username + "'" + ";";
+		SQLQuery += "WHERE username=" + "'" + Username + "'" + ";";*/
+		
+		StringBuffer stringBuffer = new StringBuffer();
+		stringBuffer.append("UPDATE usernamesandpasswords");
+		stringBuffer.append("\n");
+		
+		stringBuffer.append("SET password='");
+		stringBuffer.append(newPassword);
+		stringBuffer.append("'");
+		stringBuffer.append("\n");
+		
+		stringBuffer.append("WHERE username='");
+		stringBuffer.append(Username);
+		stringBuffer.append("';");
+		
+		String SQLQuery = stringBuffer.toString();
+		
 		this.runSQLQueryWithNoReturnValue(SQLQuery);
 	}
 
 	
 	@Override
 	public void addUserToDatabase(String Username, String Password) {
-		String tableName = "usernamesandpasswords";
+		/*String tableName = "usernamesandpasswords";
 		
 		String SQLQuery = "INSERT INTO " + tableName + " (username, password)" + "\n";
-		SQLQuery += "VALUES ('" + Username + "', '" + Password + "');";
+		SQLQuery += "VALUES ('" + Username + "', '" + Password + "');";*/
+		
+		StringBuffer stringBuffer = new StringBuffer();
+		stringBuffer.append("INSERT INTO usernamesandpasswords (username, password)");
+		stringBuffer.append("\n");
+		stringBuffer.append("VALUES ('");
+		stringBuffer.append(Username);
+		stringBuffer.append("', '");
+		stringBuffer.append(Password);
+		stringBuffer.append("');");
+		
+		String SQLQuery = stringBuffer.toString();
 		
 		this.runSQLQueryWithNoReturnValue(SQLQuery);
 	}
