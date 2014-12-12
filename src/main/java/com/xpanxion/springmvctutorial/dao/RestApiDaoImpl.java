@@ -103,11 +103,11 @@ public class RestApiDaoImpl implements UserDao {
 		stringBuffer.append(Username);
 		String url = stringBuffer.toString();
 		
-		ChangeUserPasswordBean b = new ChangeUserPasswordBean();
-		b.setNewpassword(newPassword);
-		UserBean fromDB = this.getUserWithUsername(Username);
-		b.setOldpassword(fromDB.getPassword());
-		this.restTemplate.put(url, b);
+		ChangeUserPasswordBean changeUserPasswordBean = new ChangeUserPasswordBean();
+		changeUserPasswordBean.setNewpassword(newPassword);
+		UserBean userBeanFromDataBase = this.getUserWithUsername(Username);
+		changeUserPasswordBean.setOldpassword(userBeanFromDataBase.getPassword());
+		this.restTemplate.put(url, changeUserPasswordBean);
 	}
 	
 	/**
